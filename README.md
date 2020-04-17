@@ -1,6 +1,6 @@
-# fproject
-
+# VIStul
 > A Vue.js project
+The system aims to provide the analysis of selected desired category of product using KNN algorithm by comparing the same product in the market sold by its primary competitors to its similar primary audience. This   automated system helps in reducing the computational efforts required at the client side by using a crawler for E-commerce websites developed using Scrapy framework. In this paper, a complete investigation of a system about improving the efficiency in making business decisions in a dynamic environment is depicted
 
 ## Build Setup
 
