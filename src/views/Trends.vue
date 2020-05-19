@@ -2,7 +2,7 @@
   <div class="about">
       <app-Header></app-Header>
             <section class="preview content container">
-               <h1 >SEARCH FOR TRENDS</h1>
+               <h1 class="highlight">SEARCH FOR TRENDS</h1>
               <mdb-input v-model="s1" basic aria-label="First name" placeholder="Enter first Title">
                 <span  class="input-group-text" slot="prepend">Compare <mdb-icon  style="padding-left:10px background-color:rgb(230, 241, 248) !important" icon="exchange-alt" /> </span>
                 <mdb-input v-model="s2" noWrapper aria-label="Last name" placeholder="Enter Second Title"/>
@@ -138,6 +138,11 @@ section.preview {
       padding: 50px;
 
   }
+  .highlight{
+  font-weight: 700!important;
+  color:#404040 ;
+  font-family:Optima, sans-serif;
+}
   .select{
     padding-top:50px;
     margin: 0 auto;
@@ -145,5 +150,16 @@ section.preview {
   }
   .button{
     margin-top:50px;
+    background-color:#404040!important;
+    border: none;
+    color: #fbf3fb;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 100px 2px;
+    border-top-left-radius: 10px;
+    border-bottom-right-radius: 10px;
   }
 </style>

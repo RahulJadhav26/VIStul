@@ -1,9 +1,9 @@
 <template>
   <div id="app">
-    <transition class="animated fadeInDown">
+    <transition name='slide' mode="out-in">
       <router-view/>
     </transition>
-    
+
   </div>
 </template>
 
@@ -21,5 +21,31 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+.slide-enter-active{
+animation: slide-in 200ms ease-out forwards;
+}
+.slide-enter-leave{
+animation: slide-out 200ms ease-out forwards;
+}
+@keyframes slide-in {
+    from{
+        transform: translateY(-30px);
+        opacity:0;
+    }
+    to{
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+@keyframes slide-out {
+    from{
+        transform:translateY(0);
+        opacity: 1;
+    }
+    to{
+        transform:translateY(-30px);
+        opacity:0;
+    }
 }
 </style>

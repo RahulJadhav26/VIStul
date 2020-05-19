@@ -17,6 +17,7 @@ Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 Vue.use(VueApexCharts)
 Vue.component('apexchart', VueApexCharts)
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

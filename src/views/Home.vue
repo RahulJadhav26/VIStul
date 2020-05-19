@@ -1,12 +1,12 @@
 <template>
 <div class="home">
     <app-header></app-header>
-  <mdb-jumbotron class="content mb-0 text-center" >
-    <h1 class="content card-title h1">Welcome To VIStul</h1>
-    <h3 class=" content my-4 font-weight-bold">LET'S GET YOUR E-COMMERCE TOWARDS SUCCESS</h3>
+  <div class=" container content mb-0 text-center" style="margin-top:20px;" >
+    <h1 class="highlight card-title h1">Welcome To VIStul</h1>
+    <h3 class=" highlight my-4 font-weight-bold">Let's get your E-commerce Towards Success </h3>
     <mdb-row class="d-flex justify-content-center">
       <mdb-col>
-      <h4 class="content my-4 font-weight-bold">Products Under Our Intelligence</h4>
+      <h4 class="highlight my-4 font-weight-bold">Products Under Our Intelligence</h4>
       </mdb-col>
     </mdb-row>
     <mdb-row class="d-flex justify-content-center">
@@ -20,7 +20,6 @@
         <b-card no-body>
           <b-tabs pills card>
             <b-tab title="About VIStul" active>
-
                 <div>
                     <b-card-group deck >
                       <b-card class="border content" header="VIStul">
@@ -30,7 +29,7 @@
                            <br>
                          <b>  <div style="color:red"> Analyse and helps you to restructure your price strategy based on the competition</div></b>
                           <br>
-                         <iframe class="border" width='560' height='320' src='https://www.youtube.com/embed/X8iu97QEHhI' allowfullscreen></iframe>
+                         <iframe class="video embed-responsive border" width='560' height='320' src='https://www.youtube.com/embed/X8iu97QEHhI' allowfullscreen></iframe>
                         </h5>
                         </b-card-text>
                       </b-card>
@@ -63,7 +62,7 @@
                   </b-card-group>
                <br>
                <h5 class="content"> How to use ? </h5>
-    <iframe style="border:1px solid black; border-radius:1.2em;" width='560' height='315' src='https://www.youtube.com/embed/7xC3Egey6fk' frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>
+    <iframe class="border video embed-responsive" width='560' height='315' src='https://www.youtube.com/embed/7xC3Egey6fk' frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>
               </b-card-text>
             </b-tab>
             <b-tab title="Title Optimization">
@@ -86,7 +85,7 @@
                   </b-card-group>
                   <br>
                   <h5>How to Use ?</h5>
-               <iframe class="border" width='560' height='315' src='https://www.youtube.com/embed/VkV51Ga9fWw' frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>
+                  <iframe class="border video embed-responsive"  width='560' height='315' src='https://www.youtube.com/embed/VkV51Ga9fWw' frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>
             </b-card-text>
             </b-tab>
           </b-tabs>
@@ -143,7 +142,7 @@
     <hr class="my-4">
 
     <router-link to="/SearchProducts"><button  style="color:white;" class="button">Get started</button></router-link>
-  </mdb-jumbotron>
+  </div>
 
 </div>
 </template>
@@ -218,8 +217,13 @@ export default {
 }
 </script>
 <style scoped>
+.highlight{
+  font-weight: 700!important;
+  color:#404040 ;
+  font-family:Optima, sans-serif;
+}
 .button{
-    background-color:#032539 !important;
+    background-color:#404040!important;
     border: none;
     color: #fbf3fb;
     padding: 10px;
@@ -243,7 +247,7 @@ background-color: #ececec;
 position: relative;
 }
 .content{
-  color:#032539;
+  color:#404040;
   font-family:Optima, sans-serif;
   font-weight: 600;
 }
@@ -257,5 +261,9 @@ position: relative;
   border:1px solid #404040;
    border-radius:1.2em;
 }
-
+.video{
+  width:320px;
+  height:200px;
+  margin:0 auto;
+}
 </style>

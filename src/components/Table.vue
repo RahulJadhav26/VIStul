@@ -1,7 +1,7 @@
 <template>
     <div >
     <div class="container">
-         <h1 class="content">Matching products in market</h1>
+         <h1 class="highlight">Matching products in market</h1>
             <mdb-input @keyup.enter.native="search()" label="Search your results" v-model="h" />
             <mdb-btn   class="button "  @click="search()">Results</mdb-btn>
             <mdb-btn style="background-color:red !important;" class="button"  @click="onReset()">Reset</mdb-btn>
@@ -28,7 +28,7 @@
   <mdb-card-body  class=" content matchCard-body text-center pb-0" cascade>
     <mdb-card-title  class ="headfoot" ><strong>CLIENT: {{queryProduct[0].seller.toUpperCase()}}</strong></mdb-card-title>
     <h6  style=" width: 100%; height:30%; "><strong><span >TITLE: </span><a class="content" :href="queryProduct[0].url">{{queryProduct[0].title}}</a></strong></h6>
-    <h6 class="animated tada infinite"><strong><span  >PRICE: </span></strong> ₹ {{queryProduct[0].price[queryProduct[0].price.length - 1]}}  <span style="color: red">({{priceStatus}})</span></h6>
+    <h6 class="animated tada infinite"><strong><span  >PRICE: </span></strong> ₹ {{queryProduct[0].price[queryProduct[0].price.length - 1].toLocaleString()}}  <span style="color: red">({{priceStatus}})</span></h6>
     <h6 class="animated flash infinite"><a class="suggestions"  href="#price">Click Me for Suggestions</a></h6>
     <mdb-card-footer class="headfoot" >Updated on {{date}}</mdb-card-footer>
   </mdb-card-body>
@@ -47,7 +47,7 @@
   <mdb-card-body  class="matchCard-body text-center pb-0" cascade>
     <mdb-card-title class="headfoot"><strong>{{i.seller.toUpperCase()}}</strong></mdb-card-title>
     <h6 style=" width: 100%; height:30%; "><strong><span class="content">TITLE: </span><a class="content" :href="i.url">{{i.title}}</a></strong></h6>
-    <h6 style=" width: 100%; height:30%;"><strong><span class="content">PRICE: </span></strong><h4>₹ {{i.price[i.price.length - 1]}}</h4> </h6>
+    <h6 style=" width: 100%; height:30%;"><strong><span class="content">PRICE: </span></strong><h4>₹ {{i.price[i.price.length - 1].toLocaleString()}}</h4> </h6>
     <mdb-card-footer class="headfoot" >Updated on {{date}}</mdb-card-footer>
   </mdb-card-body>
 </mdb-card>
@@ -115,7 +115,7 @@
              <div id="chart">
         <apexchart type="line" height="300" :options="chartOptions" :series="series"></apexchart>
       </div>
-              <mdb-card-title ><h2 class="highlight">₹ {{Math.ceil(bestPrice)}}</h2> </mdb-card-title>
+              <mdb-card-title ><h2 class="highlight">₹ {{Math.ceil(bestPrice).toLocaleString()}}</h2> </mdb-card-title>
              <mdb-card-text class="content"><span >Suggested price: </span> </mdb-card-text>
         </mdb-card-body >
         <mdb-card-footer class="AnalysisCard-footer">Last Update {{date}}</mdb-card-footer>
@@ -130,7 +130,7 @@
           <div id="chart">
              <apexchart   type="pie" width="350" height='355' :options="piechartOptions" :series="pieseries"></apexchart>
           </div>
-          <mdb-card-title><h2 class="highlight">{{Math.ceil(bestDiscount)}} %</h2></mdb-card-title>
+          <mdb-card-title><h2 class="highlight">{{Math.ceil(bestDiscount).toLocaleString()}} %</h2></mdb-card-title>
           <mdb-card-text ><span >Optimal discount rate </span> </mdb-card-text>
         </mdb-card-body >
         <mdb-card-footer class="AnalysisCard-footer" >Last Update {{date}}</mdb-card-footer>
@@ -194,7 +194,12 @@
           :data="data"
           striped
           bordered
+          scrollY
+          maxHeight="400px"
+          responsive
+          class="content"
         />
+        <br>
     </div>
 
   </div>
@@ -436,12 +441,12 @@ export default {
         columns: [
           {field: 'image', label: 'Product Image', sort: 'asc', format: value => "<img class='img-thumbnail zoom' style=' width:40%!important; height:50% !important; justify-content:center;display: flex;' src='" + value + "' alt = 'Not found'>"},
           {field: 'title', label: 'Matched Product', sort: 'asc'},
-          {field: 'mrp', label: 'MRP', sort: 'asc'},
-          {field: 'price', label: 'Listed Price', sort: 'asc', format: value => value[value.length - 1]},
+          {field: 'mrp', label: 'MRP', sort: 'asc', format: value => '₹' + String(value).toLocaleString()},
+          {field: 'price', label: 'Listed Price', sort: 'asc', format: value => '₹' + value[value.length - 1].toLocaleString()},
           {field: 'brand', label: 'Brand', sort: 'asc'},
           {field: 'seller', label: 'MarketPlace', sort: 'asc'},
           {field: 'discount', label: 'Discount', sort: 'asc'},
-          {field: 'url', label: 'Go to Link', sort: 'asc', format: value => "<a  href='" + value + "'>Click to Visit Seller</a>"}
+          {field: 'url', label: 'Go to Link', sort: 'asc', format: value => "<a class='change' href='" + value + "'>Click to Visit Seller</a>"}
         ],
         rows: []
       },
@@ -462,7 +467,7 @@ export default {
       list: [],
       lfields: [{key: 'label', label: 'Market Place'},
         {key: 'catCount', label: 'Number of products in the category'},
-        {key: 'catPrice', label: 'Avg Listing Price', format: value => 'Rs' + value}]
+        {key: 'catPrice', label: 'Avg Listing Price'}]
     }
   },
   computed: {
@@ -486,8 +491,14 @@ export default {
       // eslint-disable-next-line no-unused-vars
       var queryProductPrice = this.queryProduct[0].discount
       for (var i in this.items.slice(0, 3)) {
-        discount = discount + Number(this.items[i].discount)
-        divisor = divisor + 1
+        if (this.items[i].seller == 'amazon') {
+          this.items[i].discount = Math.abs(Number(this.items[i].discount) - 100)
+          discount = discount + Number(this.items[i].discount)
+          divisor = divisor + 1
+        } else {
+          discount = discount + Number(this.items[i].discount)
+          divisor = divisor + 1
+        }
       }
       var sp = discount / divisor
       // eslint-disable-next-line vue/no-side-effects-in-computed-properties
@@ -563,13 +574,14 @@ export default {
       this.items = []
       this.data = {
         columns: [
-          {field: 'image', label: 'Product Image', sort: 'asc', format: value => "<img  class='img-thumbnail zoom' style=' width:40%; height:50%; justify-content:center;display: flex;' src='" + value + "' alt = 'Not found'>"},
+          {field: 'image', label: 'Product Image', sort: 'asc', format: value => "<img class='img-thumbnail zoom' style=' width:40%!important; height:50% !important; justify-content:center;display: flex;' src='" + value + "' alt = 'Not found'>"},
           {field: 'title', label: 'Matched Product', sort: 'asc'},
-          {field: 'mrp', label: 'MRP', sort: 'asc'},
-          {field: 'price', label: 'Listed Price', sort: 'asc', format: value => value[value.length - 1]},
+          {field: 'mrp', label: 'MRP', sort: 'asc', format: value => '₹' + String(value).toLocaleString()},
+          {field: 'price', label: 'Listed Price', sort: 'asc', format: value => '₹' + value[value.length - 1].toLocaleString()},
           {field: 'brand', label: 'Brand', sort: 'asc'},
           {field: 'seller', label: 'MarketPlace', sort: 'asc'},
-          {field: 'url', label: 'Go to Link', sort: 'asc', format: value => "<a  href='" + value + "'>Click to Visit Seller</a>"}
+          {field: 'discount', label: 'Discount', sort: 'asc'},
+          {field: 'url', label: 'Go to Link', sort: 'asc', format: value => "<a class='change' href='" + value + "'>Click to Visit Seller</a>"}
         ],
         rows: []
       }
@@ -587,7 +599,7 @@ export default {
       this.piechartOptions.labels = []
       this.lfields = [{key: 'label', label: 'Market Place'},
         {key: 'catCount', label: 'Number of products in the category'},
-        {key: 'catPrice', label: 'Avg Listing Price', format: value => 'Rs' + value}]
+        {key: 'catPrice', label: 'Avg Listing Price'}]
     },
     search () {
       this.isBusy = true
@@ -717,7 +729,12 @@ export default {
           /// /////////////////////For Loop for pie Graph //////////////////////
           // eslint-disable-next-line no-redeclare
           for (var j in this.items.slice(0, 3)) {
-            var discounts = Number(this.items[j].discount)
+            // eslint-disable-next-line eqeqeq
+            if (this.items[j].seller == 'amazon') {
+              var discounts = Math.abs(Number(this.items[j].discount) - 100)
+            } else {
+              discounts = Number(this.items[j].discount)
+            }
             // console.log(discounts);
             this.piechartOptions.labels.push(this.items[j].seller.toUpperCase())
             this.pieseries.push(discounts)
@@ -744,8 +761,13 @@ export default {
 </script>
 
 <style scoped>
+.table td, .table th {
+    font-size: 0.9em!important;
+}
 .highlight{
   font-weight: 700!important;
+  color:#404040 ;
+  font-family:Optima, sans-serif;
 }
 .matchCard{
   border-radius:1.5rem !important ;
@@ -859,18 +881,11 @@ export default {
   .suggestions:hover{
     color: #404040 !important;
   }
-  table.table a{
-    color:#404040 !important;
-  }
-  table.table a:hover{
-    color:yellow !important;
-  }
-  a:hover{
-    color:blue !important;
-  }
 .content{
   color:#404040 ;
   font-family:Optima, sans-serif;
   font-weight: 600;
+  font-size:1rem !important;
 }
+
 </style>

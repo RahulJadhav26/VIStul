@@ -7,7 +7,7 @@
 
   <!-- Search engine -->
 
-      <h2 class="content" style="margin-top:1%;">Search your products</h2>
+      <h2 class="highlight" style="margin-top:1%;">Search your products</h2>
       <div class="input-group md-form form-sm form-2 pl-0">
       <input v-model="query" @keydown.enter="getFilteredData()" class="form-control my-0 py-1 lime-border" type="text" placeholder="Search" aria-label="Search">
       <div class="input-group-append">
@@ -80,7 +80,7 @@
               <b-col class="text-sm-left">{{ row.item.brand.toUpperCase() }}</b-col>
             </b-row>
             <b-row class="text-sm-right"><b>Price:</b>
-             <b-col class="text-sm-left">₹ {{ row.item.price[row.item.price.length - 1] }}</b-col>
+             <b-col class="text-sm-left">₹ {{ row.item.price[row.item.price.length - 1].toLocaleString() }}</b-col>
             </b-row>
           </b-col>
           </b-row>
@@ -206,8 +206,11 @@ export default {
     },
     filterQuery: function () {
       console.log('called')
+
       return this.filteredData.filter((product) => {
-        return product.title.toLowerCase().match(this.query.toLowerCase())
+        if (product.title.toLowerCase().match(this.query.toLowerCase()) || product.brand.toLowerCase().match(this.query.toLowerCase()) || product.code.toLowerCase().match(this.query.toLowerCase())) {
+          return product;
+        }
       })
     }
 
@@ -316,11 +319,17 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
 .content{
   color:#404040 ;
   font-family:Optima, sans-serif;
   font-weight: 600;
+  font-size:1rem !important;
+}
+.highlight{
+  font-weight: 700!important;
+  color:#404040 ;
+  font-family:Optima, sans-serif;
 }
 
   .input-group.md-form.form-sm.form-2 input.lime-border  {
@@ -361,8 +370,6 @@ export default {
 
 }
 .imageCard{
-  width: 250px;
-  height:200px;
   justify-content: center;
   display: flex;
   border-radius:1.5rem;
