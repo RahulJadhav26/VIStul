@@ -43,10 +43,9 @@
     </mdb-row>
 
     <!-- Spinner -->
-
-    <div v-if="isBusy" class="spinner-grow text-info" style="width: 4rem; height: 4rem;" role="status">
-      <span class="text">Loading...</span>
-    </div>
+    <div  v-if="isBusy"  class="spinner-border text-warning" style="width: 3rem; height: 3rem;" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
     <div style="margin : 10%" v-if="isfail">
       <h6> Sorry no results Found...!!</h6>
     </div>
@@ -104,12 +103,13 @@
 
 <script>
 
-import { mdbIcon, mdbBtn, mdbInput, mdbScrollbar, mdbRow, mdbCol, mdbCard, mdbCardBody, mdbCardTitle, mdbCardText, mdbCardGroup, mdbCardFooter } from 'mdbvue'
+import { mdbIcon, mdbBtn, mdbInput, mdbScrollbar, mdbRow, mdbCol, mdbCard, mdbCardBody, mdbCardTitle, mdbCardText, mdbCardGroup, mdbCardFooter, mdbSpinner } from 'mdbvue'
 
 import HeaderVue from '../components/Header.vue'
 
 export default {
   components: {
+    mdbSpinner,
     mdbIcon,
     mdbBtn,
     appHeader: HeaderVue,
@@ -209,7 +209,7 @@ export default {
 
       return this.filteredData.filter((product) => {
         if (product.title.toLowerCase().match(this.query.toLowerCase()) || product.brand.toLowerCase().match(this.query.toLowerCase()) || product.code.toLowerCase().match(this.query.toLowerCase())) {
-          return product;
+          return product
         }
       })
     }

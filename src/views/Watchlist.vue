@@ -17,7 +17,7 @@
 
       <template v-slot:row-details="row">
         <b-card >
-        <div class="content" v-for="i in row.item.matchItems">
+        <div class="content" v-for="i in row.item.matchItems" :key="i">
           <b-row style=" height:30%;width:100%;margin-bottom:1.2rem; border: 1px solid black; border-radius:1.25rem">
             <b-col sm="2" class="sm-text-right"><b>Matched Marketplace:</b></b-col>
             <b-col sm="2" class="sm-text-left">{{i.seller.toUpperCase()}}</b-col>

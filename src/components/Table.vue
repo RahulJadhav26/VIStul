@@ -10,11 +10,12 @@
     <br>
     <div>
   <mdb-container>
-    <div v-if="isBusy" class="spinner-grow" style="margin: 0 auto; width: 4rem; height: 4rem;" role="status">
-      <span class="text">Loading...</span>
-    </div>
+    <div  v-if="isBusy"  class="spinner-border text-warning" style="width: 3rem; height: 3rem;" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
     <div v-if="fail">
-     <h4 class="content">Sorry no results Found...!!</h4>
+     <h2 style='color:#404040 ;font-family:Optima, sans-serif;font-weight: 600;' >Sorry no Matching results Found...!!</h2>
+       <p>(Maybe Check if it is your own product code or not)</p>
     </div>
     <mdb-row>
 <mdb-col sm="6" md="3"  >
@@ -35,7 +36,7 @@
 </mdb-card>
 
 </mdb-col>
-      <mdb-col v-for="i in items.slice(0,3)" sm="6" md="3" >
+      <mdb-col v-for="i in items.slice(0,3)" :key='i' sm="6" md="3" >
 
     <mdb-card md="3" sm="6" lg="12" class=" animated flipInY img-fluid z-depth-1 mb-3 matchCard"   v-if="show" dark>
   <mdb-view hover cascade class="zoom img-thumbnail image-view">
@@ -491,7 +492,9 @@ export default {
       // eslint-disable-next-line no-unused-vars
       var queryProductPrice = this.queryProduct[0].discount
       for (var i in this.items.slice(0, 3)) {
+        // eslint-disable-next-line eqeqeq
         if (this.items[i].seller == 'amazon') {
+          // eslint-disable-next-line vue/no-side-effects-in-computed-properties
           this.items[i].discount = Math.abs(Number(this.items[i].discount) - 100)
           discount = discount + Number(this.items[i].discount)
           divisor = divisor + 1
@@ -553,7 +556,7 @@ export default {
       console.log('function called')
       // eslint-disable-next-line no-unused-vars
       // eslint-disable-next-line standard/computed-property-even-spacing
-      var queryProductPrice = this.queryProduct[0].price[this.queryProduct[0].price.length - 1 ]
+      // var queryProductPrice = this.queryProduct[0].price[this.queryProduct[0].price.length - 1 ]
       for (var i in this.items.slice(0, 3)) {
         // eslint-disable-next-line standard/computed-property-even-spacing
         price = price + Number(this.items[i].price[this.queryProduct[0].price.length - 1 ])
@@ -639,7 +642,8 @@ export default {
           matchCodes = this.matchItems[0]
           if (!matchCodes) {
             this.fail = true
-            this.toggleBusy()
+            this.isBusy = false
+            return
           }
 
           for (match in matchCodes) {

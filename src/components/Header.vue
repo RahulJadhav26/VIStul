@@ -1,7 +1,7 @@
 <template>
-<div class="container" style="margin-top:20px">
+<div class="container"  style="border:none; margin-top:20px">
 
-<mdb-navbar expand="large" style="border-radius:1.4rem; background-color:rgb(230, 241, 248);" dark >
+<mdb-navbar   expand="large" style="background-color:rgb(230, 241, 248); border-radius:1.2rem;" dark >
    <mdb-navbar-brand href="#">
 
     </mdb-navbar-brand>
@@ -85,6 +85,14 @@ export default {
     },
     onLeave () {
       this.$refs.dropdown.visible = false
+    },
+    openNav () {
+      this.width = '20%'
+      this.opacity = '0.95'
+    },
+    closeNav () {
+      this.width = '0%'
+      this.opacity = '0.2'
     }
   },
   computed: {
@@ -93,16 +101,6 @@ export default {
     },
     computedOpacity () {
       return this.opacity
-    }
-  },
-  methods: {
-    openNav () {
-      this.width = '20%'
-      this.opacity = '0.95'
-    },
-    closeNav () {
-      this.width = '0%'
-      this.opacity = '0.2'
     }
   },
   props: ['obj']
@@ -118,7 +116,7 @@ export default {
     background: #404040!important;
     border-radius:1.4rem;
 }
-a:hover{  
+a:hover{
   color:blue!important;
   transition: 300ms;
 }
@@ -141,10 +139,11 @@ font-weight: 500!important;
 .nav-link{
   color: #404040  !important;
   font-family: Optima, sans-serif;
+  transition: transform .2s;
 }
 .nav-link:hover{
   border-bottom: 1px solid yellow;
-   transition: font-size 19px!important;
+  transform: scale(1.3);
    color:#404040 !important;
    margin: 5px 5px !important;
    padding-bottom: 0%!important;
