@@ -11,7 +11,7 @@
     "start": "vue-cli-service serve --open"
   },
   "dependencies": {
-    "apexcharts": "^3.17.1",
+    "apexcharts": "^3.24.0",
     "bootstrap-vue": "^2.5.0",
     "mdbvue": "^6.5.0",
     "vue": "^2.5.2",
